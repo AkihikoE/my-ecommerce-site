@@ -1534,37 +1534,53 @@
 
                   </form>
                 </div>
+
                 <div role="tabpanel" class="tab-pane" id="register">
                   <form method="post" data-aos="fade">
                     <div class="form-group row">
                       <div class="col-md-6 mb-3 mb-lg-0">
-                        <input type="text" class="form-control" placeholder="First name">
+                        <input type="text" class="form-control" id="rfname" placeholder="First name">
                       </div>
                       <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="Last name">
+                        <input type="text" class="form-control" id="rlname"placeholder="Last name">
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <div class="col-md-12">
-                        <input type="text" class="form-control" placeholder="Occupation">
+                        <select name="OccupationCategory" id="occupation-category"class="form-control" onchange="showOccupation()">
+                          <option value="">Occupation Category</option>                          
+                        </select>
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <div class="col-md-12">
-                        <input type="email" class="form-control" placeholder="Email">
+                        <select name="Occupation" id="occupation" class="form-control" >                        
+                          <option value=''>Occupation</option>
+                        </select>
                       </div>
                     </div>
 
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <input type="email" class="form-control" id="remail" placeholder="Email">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <input type="password" class="form-control" id="rpassword" placeholder="Password">
+                      </div>
+                    </div>
 
                     <div class="form-group row">
                       <div class="col-md-6">
-
-                        <input type="submit" class="btn btn-primary py-3 px-5 btn-block" value="Send Message">
+                        <input type="button" onclick="submitRegister()" class="btn btn-primary py-3 px-5 btn-block" value="Send Message">
                       </div>
                     </div>
 
+                    <!--login-->
                   </form>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="sign-in">
@@ -1572,20 +1588,20 @@
 
                     <div class="form-group row">
                       <div class="col-md-12">
-                        <input type="text" class="form-control" placeholder="Username">
+                        <input type="text" class="form-control" placeholder="Username" id="lUsername">
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <div class="col-md-12">
-                        <input type="password" class="form-control" placeholder="Password">
+                        <input type="password" class="form-control" placeholder="Password" id="lPassword">
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <div class="col-md-6">
 
-                        <input type="submit" class="btn btn-primary py-3 px-5 btn-block" value="Send Message">
+                        <input type="button" onclick="submitLogin()" class="btn btn-primary py-3 px-5 btn-block" value="Send Message">
                       </div>
                     </div>
 
@@ -1623,9 +1639,9 @@
             <h3 class="text-white">Subscribe</h3>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus, odio beatae accusantium.
             </p>
-            <form action="#">
+            <form id="subscribe-form">
               <div class="d-flex mb-5">
-                <input type="text" class="form-control rounded-0" placeholder="Email">
+                <input type="email" class="form-control rounded-0" placeholder="Email">
                 <input type="submit" class="btn btn-primary rounded-0" value="Subscribe">
               </div>
             </form>
@@ -1768,6 +1784,8 @@
       //loadSubject("./json/contact_subject.json");
       // loadSubject('http://localhost:4040/')
       loadSubject('http://localhost:4000/api/subject')
+      showCategory();
+      document.getElementById('subscribe-form').addEventListener('submit',cbFunction)
     };
 
     //AJAX function
@@ -1800,6 +1818,78 @@
         data : data
       })
     }
+    function submitRegister(){
+      const data = {
+        fname: document.getElementById('rfname').value,
+        lname: document.getElementById('rlname').value,
+        occupation_category : document.getElementById('occupation-category').value,
+        occupation : document.getElementById('occupation').value,
+        email: document.getElementById('remail').value,
+        password: document.getElementById('rpassword').value
+      }
+      console.log(data);
+      let response = ajax({
+        url : 'http://localhost:4000/api/register',
+        method: 'POST',
+        data : data
+      })
+    }
+    function submitLogin(){
+      const data = {
+        Email: document.getElementById('lUsername').value,
+        Password: document.getElementById('lPassword').value
+      }
+      console.log(data)
+      let response = ajax({
+        url : 'http://localhost:4000/api/login',
+        method : 'POST',
+        data : data
+      })
+    }
+
+    
+
+    async function showCategory(){
+      const response = await fetch('./json/ocupation_cat.json');
+      const data = await response.json();
+
+      const select = document.getElementById("occupation-category");
+      console.log(data)
+      data.OccupationCategory.forEach(item => {
+        const option = document.createElement("option");
+        option.textContent = item;
+        option.value = item;
+        select.appendChild(option);
+      });
+    }
+
+    async function showOccupation(){
+      const selected = document.getElementById("occupation-category").value;
+      const select = document.getElementById("occupation")
+      let file;
+      if(selected==="Computer"){
+          file = './json/computer.json'
+      }else if(selected === "Healthcare"){
+          file = './json/healthcare.json'
+      }else if(selected === "Scientific" ){
+          file = './json/scientific.json'
+      }else if (selected === ""){
+          select.innerHTML= "<option value=''>Occupation</option>";
+
+        return;
+      }
+      
+      const response = await fetch(file);
+      const data = await response.json();
+      select.innerHTML="<option value=''>Occupation</option>";
+      data[selected].forEach(item=>{
+        const option = document.createElement("option");
+        option.textContent = item;
+        option.value = item;
+        select.appendChild(option);
+      })
+    }
+
   </script>
 
 </body>

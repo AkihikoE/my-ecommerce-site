@@ -11,7 +11,8 @@ app.use(bodyParser.json())
 
 app.use('/api/subject', require('./routes/subject'));
 app.use('/api/contact', require('./routes/contact'));
-
+app.use('/api/register', require('./routes/register'));
+app.use('/api/login', require("./routes/login"));
 app.listen(PORT, ()=>{
     console.log("Server is running on http://localhost:"+PORT);
 })

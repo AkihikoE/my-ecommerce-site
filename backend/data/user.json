@@ -1,0 +1,50 @@
+[
+  {
+    "Firstname": "admin",
+    "Lastname": "admin123",
+    "Ocupation_Category": "Computer",
+    "Occupation": "Software Developer",
+    "Email": "admin@gmail.com",
+    "Password": "admin123"
+  },
+  {
+    "Firstname": "t",
+    "Lastname": "t",
+    "Ocupation_Category": "Computer",
+    "Occupation": "Designer",
+    "Email": "t@g.com",
+    "Password": "123"
+  },
+  {
+    "Firstname": "a",
+    "Lastname": "a",
+    "Ocupation_Category": "Healthcare",
+    "Occupation": "Physician Associate",
+    "Email": "a@c.c",
+    "Password": "1"
+  },
+  {
+    "Firstname": "a",
+    "Lastname": "a",
+    "Ocupation_Category": "Computer",
+    "Occupation": "Software Developer",
+    "Email": "a",
+    "Password": "a"
+  },
+  {
+    "Firstname": "momoe",
+    "Lastname": "first",
+    "Ocupation_Category": "Scientific",
+    "Occupation": "Geographer",
+    "Email": "abcdefghijklmnopqrstuvwxyz@gmail.com",
+    "Password": "123456789"
+  },
+  {
+    "Firstname": "momoe",
+    "Lastname": "first",
+    "Ocupation_Category": "Computer",
+    "Occupation": "Software Developer",
+    "Email": "asd",
+    "Password": "  "
+  }
+]
